@@ -1,4 +1,4 @@
-
+from game.card import Card
 """
     Update the code and the comments as you change the code for your game.  You will be graded on following the
     Rules listed and your program meets all of the Requirements found on 
@@ -22,6 +22,9 @@ class Director:
             self (Director): an instance of Director.
         """
         self.is_playing = True
+        self.score = 300
+        self.card = Card()
+        self.card.draw()
 
     def start_game(self):
         """Starts the game by running the main game loop.
@@ -40,6 +43,9 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
+        last = self.card.face
+        print(f"The card is: {last}")
+        self.choice = input("Higher or lower? [h/l] ")
         pass
 
     def do_updates(self):
@@ -50,6 +56,23 @@ class Director:
         """
         if not self.is_playing:
             return
+
+        self.card.draw()
+
+        newCard = self.card.face
+        oldCard = self.card.lastCard
+
+        while newCard == oldCard:
+            self.card.draw()
+            newCard = self.card.face
+            oldCard = self.card.lastCard
+
+        if newCard > oldCard:
+            if self.choice.lower() == "h":
+                self.score += 100
+            else:
+                self.score -= 75
+        
 
     def do_outputs(self):
         """Displays the dice and the score. Also asks the player if they want to roll again. 
