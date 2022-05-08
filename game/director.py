@@ -22,9 +22,9 @@ class Director:
             self (Director): an instance of Director.
         """
         self.is_playing = True
-        self.score = 300
+        self.score = 0
         self.card = Card()
-        self.card.draw()
+        
 
     def start_game(self):
         """Starts the game by running the main game loop.
@@ -43,10 +43,10 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        last = self.card.face
-        print(f"The card is: {last}")
-        self.choice = input("Higher or lower? [h/l] ")
-        pass
+        
+        hilo_guess = input("Wanna try Hilo guess? [y/n] \n")
+        self.is_playing = (hilo_guess.lower() == "y")
+        print("==================================================================================================================")
 
     def do_updates(self):
         """Updates the player's score.
@@ -55,25 +55,12 @@ class Director:
             self (Director): An instance of Director.
         """
         if not self.is_playing:
-            return
-
-        self.card.draw()
-
-        newCard = self.card.face
-        oldCard = self.card.lastCard
-
-        while newCard == oldCard:
-            self.card.draw()
-            newCard = self.card.face
-            oldCard = self.card.lastCard
-
-        if newCard > oldCard:
-            if self.choice.lower() == "h":
-                self.score += 100
-            else:
-                self.score -= 75
-        
-
+            print("Thanks for trying our Hilo guess game. See you later!")
+            return 
+ 
+        # Call the guessCard function from the card library
+        self.card.guessCard()
+    
     def do_outputs(self):
         """Displays the dice and the score. Also asks the player if they want to roll again. 
 
@@ -81,4 +68,12 @@ class Director:
             self (Director): An instance of Director.
         """
         if not self.is_playing:
+            print("Thanks for trying our Hilo guess game. See you later!")
             return
+        print("\n==================================================================================================================")
+        # Print current score
+        print(f"Your current score is: {self.card.points}")
+        print("==================================================================================================================\n")
+
+        # Keep playing as long the score is above 0
+        self.is_playing == (self.score > 0)
