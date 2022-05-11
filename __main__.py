@@ -1,4 +1,4 @@
-from tkinter import Y
+
 from game.director import Director
 
 director = Director()

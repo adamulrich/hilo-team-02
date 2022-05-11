@@ -22,8 +22,9 @@ class Director:
             self (Director): an instance of Director.
         """
         self.is_playing = True
-        self.score = 0
+        self.score = 300
         self.card = Card()
+        self.card.draw()
         
 
     def start_game(self):
@@ -43,11 +44,13 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        
-        hilo_guess = input("Wanna try Hilo guess? [y/n] \n")
-        self.is_playing = (hilo_guess.lower() == "y")
-        print("==================================================================================================================")
 
+        last = self.card.face
+        print(f"The card is: {last}")
+        #make sure only h or l
+        self.choice = input("Higher or lower? [h/l] ")
+        pass
+        
     def do_updates(self):
         """Updates the player's score.
 
@@ -56,10 +59,35 @@ class Director:
         """
         if not self.is_playing:
             print("Thanks for trying our Hilo guess game. See you later!")
-            return 
- 
-        # Call the guessCard function from the card library
-        self.card.guessCard()
+            return
+
+        self.card.draw()
+
+        newCard = self.card.face
+        oldCard = self.card.lastCard
+
+        while newCard == oldCard:
+            self.card.draw()
+            newCard = self.card.face
+            oldCard = self.card.lastCard
+
+        print(f"The new card is: {self.card.face}")
+
+        if newCard > oldCard:
+            if self.choice.lower() == "h":
+                self.score += 100
+                print("You guessed correctly!")
+            else:
+                self.score -= 75
+                print("You guessed wrong!")
+        else:
+            if self.choice.lower() == "l":
+                self.score += 100
+                print("You guessed correctly!")
+            else:
+                self.score -= 75
+                print("You guessed wrong!")
+
     
     def do_outputs(self):
         """Displays the dice and the score. Also asks the player if they want to roll again. 
@@ -70,10 +98,13 @@ class Director:
         if not self.is_playing:
             print("Thanks for trying our Hilo guess game. See you later!")
             return
-        print("\n==================================================================================================================")
-        # Print current score
-        print(f"Your current score is: {self.card.points}")
-        print("==================================================================================================================\n")
-
+             # Print current score
+        print(f"Your current score is: {self.score}\n")
+        
         # Keep playing as long the score is above 0
-        self.is_playing == (self.score > 0)
+        if self.score > 0:
+            pass
+        else:
+            self.is_playing = False
+            print("You lose!")
+            return

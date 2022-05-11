@@ -21,7 +21,7 @@ class Card:
 
         self.lastCard = self.face
 
-        self.face = random.randint(1, 14)
+        self.face = random.randint(1, 13)
 
         
 
