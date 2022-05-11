@@ -33,10 +33,12 @@ class Director:
         Args:
             self (Director): an instance of Director.
         """
+        print("Welcome to Hilo! Each round you'll guess whether the next card will be higher or lower than the last one!\n")
         while self.is_playing:
             self.get_inputs()
             self.do_updates()
             self.do_outputs()
+        print(f"Thanks for playing! Your final score was {self.score}")
 
     def get_inputs(self):
         """Ask the user if they want to roll.
@@ -48,7 +50,10 @@ class Director:
         last = self.card.face
         print(f"The card is: {last}")
         #make sure only h or l
+        
         self.choice = input("Higher or lower? [h/l] ")
+        while (self.choice.lower() != "h") and (self.choice.lower() != "l"):
+            self.choice = input("Higher or lower? [h/l] ")
         pass
         
     def do_updates(self):
@@ -57,9 +62,7 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        if not self.is_playing:
-            print("Thanks for trying our Hilo guess game. See you later!")
-            return
+      
 
         self.card.draw()
 
@@ -95,15 +98,19 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        if not self.is_playing:
-            print("Thanks for trying our Hilo guess game. See you later!")
-            return
+       
              # Print current score
         print(f"Your current score is: {self.score}\n")
         
         # Keep playing as long the score is above 0
         if self.score > 0:
+
+            playing = input("Wanna keep playing? [y/n]")
+            while (playing.lower() != "y") and (playing.lower() != "n"):
+                playing = input("Wanna keep playing? [y/n]")
+            self.is_playing = (playing.lower() == "y")
             pass
+            
         else:
             self.is_playing = False
             print("You lose!")
