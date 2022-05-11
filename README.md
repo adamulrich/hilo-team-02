@@ -8,7 +8,7 @@ TEAM MEMBERS :
 
 1. George Blanchard
 2. Baron Tshibasu
-3. Ricardo Salazar
+3. Nathan Rolim
 
 
 
